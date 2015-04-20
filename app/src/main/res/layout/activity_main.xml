@@ -14,8 +14,9 @@
         android:text="@string/start_event_bus"
         android:layout_width="200dp"
         android:layout_height="60dp"
+        android:textColor="@color/main_color"
+        android:background="@color/default_color"
         android:gravity="center"
-        android:background="#ff5d5d5a"
         android:layout_gravity="center_horizontal"/>
 
 </LinearLayout>

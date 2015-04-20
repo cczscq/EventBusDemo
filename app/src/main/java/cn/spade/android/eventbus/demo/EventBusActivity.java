@@ -1,23 +1,29 @@
 package cn.spade.android.eventbus.demo;
 
-import android.content.Intent;
-import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
+import android.support.v7.app.ActionBarActivity;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
 
+import butterknife.ButterKnife;
+import butterknife.OnClick;
+import cn.spade.android.eventbus.demo.model.ActionGit;
+import cn.spade.android.eventbus.demo.model.ActionSvn;
+import cn.spade.android.eventbus.demo.tool.LogTool;
 import de.greenrobot.event.EventBus;
-import de.greenrobot.event.EventBusBuilder;
 
 
 public class EventBusActivity extends ActionBarActivity {
 
+  private static final String TAG = EventBus.class.getSimpleName();
 
-  EventBus eventBus;
+  private EventBus eventBus;
   @Override
   protected void onCreate(Bundle savedInstanceState) {
 	super.onCreate(savedInstanceState);
 	setContentView(R.layout.activity_event_bus);
+    ButterKnife.inject(this);
 
 //    eventBus = EventBus.builder().build();
     eventBus = EventBus.builder().skipMethodVerificationFor(this.getClass()).build();
@@ -35,17 +41,32 @@ public class EventBusActivity extends ActionBarActivity {
     eventBus.unregister(this);
   }
 
+  @OnClick({R.id.post_event_boolean, R.id.post_event_action_git, R.id.post_event_action_svn})
+  public void onClick(View view){
+    switch (view.getId()){
+      case R.id.post_event_boolean:
+        eventBus.post(new Boolean(true));
+        break;
+      case R.id.post_event_action_git:
+        eventBus.post(new ActionGit("git"));
+        break;
+      case R.id.post_event_action_svn:
+        eventBus.post(new ActionSvn("svn"));
+        break;
+    }
+  }
+
   public void onEvent(Boolean b){
-
+    LogTool.info(TAG, "onEvent(): Boolean = " + b);
   }
 
-  public void onEvent(Intent intent){
-
+  public void onEvent(ActionGit actionGit){
+    LogTool.info(TAG, "onEvent(): ActionGit = " + actionGit.toString());
   }
 
-//  public void onEventTest(Intent intent){
-//
-//  }
+  public void onEvent(ActionSvn actionSvn){
+    LogTool.info(TAG, "onEvent(): ActionSvn = " + actionSvn.toString());
+  }
 
   @Override
   public boolean onCreateOptionsMenu(Menu menu) {

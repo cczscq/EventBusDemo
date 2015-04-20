@@ -77,11 +77,16 @@ public class EventBus {
     private final SubscriberMethodFinder subscriberMethodFinder;
     private final ExecutorService executorService;
 
+    //当调用事件处理函数异常时是否抛出异常
     private final boolean throwSubscriberException;
+    //当调用事件处理函数异常时是否打印异常信息
     private final boolean logSubscriberExceptions;
+    //当没有订阅者订阅该事件时是否打印日志
     private final boolean logNoSubscriberMessages;
+    //当调用事件处理函数异常时是否发送 SubscriberExceptionEvent 事件，若此开关打开，订阅者可通过
     private final boolean sendSubscriberExceptionEvent;
     private final boolean sendNoSubscriberEvent;
+    //是否支持事件继承
     private final boolean eventInheritance;
 
     /** Convenience singleton for apps using a process-wide EventBus instance. */
@@ -312,7 +317,9 @@ public class EventBus {
      * @param event
      */
     public void post(Object event) {
+        //线程Post信息
         PostingThreadState postingState = currentPostingThreadState.get();
+        //加入事件队列
         List<Object> eventQueue = postingState.eventQueue;
         eventQueue.add(event);
 
@@ -597,11 +604,15 @@ public class EventBus {
     final static class PostingThreadState {
         //事件队列
         final List<Object> eventQueue = new ArrayList<Object>();
+        //是否分发中
         boolean isPosting;
         //是否为主线程
         boolean isMainThread;
+        //订阅者信息
         Subscription subscription;
+        //事件
         Object event;
+        //是否取消
         boolean canceled;
     }
 
