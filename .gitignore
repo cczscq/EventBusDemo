@@ -7,3 +7,4 @@
 .gradle/
 .idea/
 EventBusDemo.iml
+app/build
