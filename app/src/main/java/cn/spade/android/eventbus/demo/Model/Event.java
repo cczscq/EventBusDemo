@@ -3,11 +3,11 @@ package cn.spade.android.eventbus.demo.model;
 /**
  * Created by zhaosc on 4/20/15.
  */
-public class ActionSvn {
+public class Event {
 
   private String name;
 
-  public ActionSvn(String name){
+  public Event(String name){
 	this.name = name;
   }
 

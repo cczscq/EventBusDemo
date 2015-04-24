@@ -8,8 +8,9 @@ import android.view.View;
 
 import butterknife.ButterKnife;
 import butterknife.OnClick;
-import cn.spade.android.eventbus.demo.model.ActionGit;
-import cn.spade.android.eventbus.demo.model.ActionSvn;
+import cn.spade.android.eventbus.demo.model.Event;
+import cn.spade.android.eventbus.demo.model.EventPull;
+import cn.spade.android.eventbus.demo.model.EventPush;
 import cn.spade.android.eventbus.demo.tool.LogTool;
 import de.greenrobot.event.EventBus;
 
@@ -41,31 +42,37 @@ public class EventBusActivity extends ActionBarActivity {
     eventBus.unregister(this);
   }
 
-  @OnClick({R.id.post_event_boolean, R.id.post_event_action_git, R.id.post_event_action_svn})
+  @OnClick({R.id.post_event_default, R.id.post_event_pull, R.id.post_event_push})
   public void onClick(View view){
     switch (view.getId()){
-      case R.id.post_event_boolean:
-        eventBus.post(new Boolean(true));
+      case R.id.post_event_default:
+        eventBus.post(new Event("default"));
         break;
-      case R.id.post_event_action_git:
-        eventBus.post(new ActionGit("git"));
+      case R.id.post_event_pull:
+        eventBus.post(new EventPull("pull"));
         break;
-      case R.id.post_event_action_svn:
-        eventBus.post(new ActionSvn("svn"));
+      case R.id.post_event_push:
+        eventBus.post(new EventPush("push"));
         break;
     }
   }
 
-  public void onEvent(Boolean b){
-    LogTool.info(TAG, "onEvent(): Boolean = " + b);
+  //onEvent
+  //onEventMainThread
+  //onEventBackgroundThread
+  //onEventAsync
+
+
+  public void onEventMainThread(Event event){
+    LogTool.info(TAG, "onEvent(): event = " + event.toString());
   }
 
-  public void onEvent(ActionGit actionGit){
-    LogTool.info(TAG, "onEvent(): ActionGit = " + actionGit.toString());
+  public void onEventMainThread(EventPull eventPull){
+    LogTool.info(TAG, "onEvent(): eventPull = " + eventPull.toString());
   }
 
-  public void onEvent(ActionSvn actionSvn){
-    LogTool.info(TAG, "onEvent(): ActionSvn = " + actionSvn.toString());
+  public void onEventMainThread(EventPush eventPush){
+    LogTool.info(TAG, "onEvent(): eventPush = " + eventPush.toString());
   }
 
   @Override

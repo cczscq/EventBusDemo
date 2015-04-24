@@ -70,6 +70,7 @@ public class EventBus {
     };
 
 
+    //
     private final HandlerPoster mainThreadPoster;
     private final BackgroundPoster backgroundPoster;
     private final AsyncPoster asyncPoster;
@@ -564,6 +565,11 @@ public class EventBus {
         }
     }
 
+    /**
+     *  通过订阅者信息，使用反射机制，调用订阅者响应方法
+     * @param subscription      订阅者
+     * @param event             事件参数
+     */
     void invokeSubscriber(Subscription subscription, Object event) {
         try {
             subscription.subscriberMethod.method.invoke(subscription.subscriber, event);

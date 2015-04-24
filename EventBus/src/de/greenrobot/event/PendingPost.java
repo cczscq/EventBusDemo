@@ -18,11 +18,18 @@ package de.greenrobot.event;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * PendingPost类
+ */
 final class PendingPost {
+    //PendingPost对象缓存列表
     private final static List<PendingPost> pendingPostPool = new ArrayList<PendingPost>();
 
+    //事件
     Object event;
+    //订阅者信息
     Subscription subscription;
+    //下一个
     PendingPost next;
 
     private PendingPost(Object event, Subscription subscription) {
