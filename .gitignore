@@ -4,5 +4,6 @@ build/
 captures
 .gradle/
 .idea/
+EventBus/build/
 EventBusDemo.iml
 app/build
